@@ -1,47 +1,70 @@
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
-#include <fstream>
 #include <vector>
+#include <map>
+#include <sstream>
+#include <string>
+#include <cassert>
 
 #define int long long
 
 using namespace std;
 
+string trim(string s){
+    while (s.size() && s.back()==' ') s.pop_back();
+    while (s.size() && s.front()==' ') s.erase(0,1);
+    return s;
+}
 signed main(){
+    
+    freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
+
     int ans=0;
-    vector<string> vc;
     string s;
+    bool queries=0;
+    map<int,vector<int>> vc;
+    int cnt=0;
     while (getline(cin,s)){
-        vc.push_back("    "+s+"    ");
-    }
-    int n=vc.size(), m=vc[0].size();
-    for (int i=0; i<n; ++i){
-        for (int j=4; j<m-4; ++j){
-            if (j>2){
-                s=vc[i].substr(j-3,4);
-                if (s=="XMAS" || s=="SAMX") ans++;
-            }
-            if (i>2){
-                s.clear();
-                for (int k=i-3; k<=i; ++k){
-                    s+=vc[k][j];
+        s=trim(s);
+        if (s.empty()){
+            queries=1;
+            continue;
+        }
+
+        if (!queries){
+            int a=stoi(s.substr(0,2)), b=stoi(s.substr(3,2));
+            vc[a].push_back(b);
+        } else {
+            vector<int> v;
+            for (auto &c:s) if (c==',') c=' ';
+            stringstream ss(s);
+            int a;
+            bool ok=1;
+            while (ss>>a){
+                for (auto i:vc[a]){
+                    for (auto j:v){
+                        if(i==j){
+                            ok=0;
+                            break;
+                        }
+                    }
+                    if (!ok) break;
                 }
-                if (s=="XMAS" || s=="SAMX") ans++;
+                if (!ok) break;
+                v.push_back(a);
             }
-            if (i<n-3){
-                s.clear();
-                for (int k=0; k<4; ++k){
-                    s+=vc[i+k][j+k];
-                }
-                if (s=="XMAS" || s=="SAMX") ans++;
-                s.clear();
-                for (int k=0; k<4; ++k){
-                    s+=vc[i+k][j-k];
-                }
-                if (s=="XMAS" || s=="SAMX") ans++;
+            if (!ok) {
+                cnt++;
+                continue;
             }
+            assert(v.size()%2==1);
+            ans+=v[v.size()/2];
+            
+            for (auto i:v) cerr << i << " ";
+            cerr << endl;
         }
     }
-    cout << ans;
+    cout << ans << " " << cnt;
 }
