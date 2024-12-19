@@ -42,5 +42,13 @@ namespace aoc {
 			}
 			return s;
 		}
+
+		std::string remove_spaces(std::string s) {
+			std::string res;
+			for (char c : s) {
+				if (c != ' ') res += c;
+			}
+			return res;
+		}
 	}; // namespace str
 }; // namespace aoc
