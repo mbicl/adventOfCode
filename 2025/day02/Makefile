@@ -12,7 +12,7 @@ two:
 	./exe < input.txt > output.txt
 
 get:
-	aocdl -year 2024 -day 17 -force -session-cookie $(AOC_SESSION)
+	aocdl -year 2025 -day 2 -force -session-cookie $(AOC_SESSION)
 
 cp:
 	cp 1.cpp 2.cpp
