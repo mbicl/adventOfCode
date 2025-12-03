@@ -7,38 +7,28 @@
 
 using namespace std;
 
-int t = 100;
-
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
+#define int long long
 
 signed main() {
-	int a=50, ans=0, cnt = 0;
+	int ans = 0;
 	string s;
 	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		int old_a = a;
-		if (c=='L') {
-			while (x--) {
-				a--;
-				if (a==0) ans++;
-				if (a==-1) a=99;
+		string c;
+		int cnt=12, f=0;
+
+		while (cnt>0) {
+			int mx=f;
+			for (int i=mx; i<s.size()-cnt+1; ++i) {
+				if (s[i]>s[mx]) {
+					mx=i;
+				}
 			}
+			c+=s[mx];
+			f=mx+1;
+			cnt--;
 		}
-		else {
-			while (x--) {
-				a++;
-				if (a==100) a=0;
-				if (a==0) ans++;
-			}
-		}
+
+		ans+=stoll(c);
 	}
 
 	cout << ans;
