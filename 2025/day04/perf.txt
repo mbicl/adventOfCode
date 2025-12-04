@@ -1,0 +1,38 @@
+Execution time (C++): 5208.11 ms
+Execution time (C++): 5260.33 ms
+Execution time (C++): 3999.08 ms
+Execution time (C++): 2370.29 ms
+Execution time (C++): 2357.11 ms
+Execution time (C++): 2355.79 ms
+Execution time (Go parallel): 5881 ms
+Execution time (Go parallel): 3576 ms
+Execution time (Go parallel): 1350 ms
+Execution time (Go parallel): 1332 ms
+Execution time (Go parallel): 1054 ms
+Execution time (Go parallel): 888 ms
+Execution time (Go parallel): 1326 ms
+Execution time (Go parallel): 1289 ms
+Execution time (Go parallel): 1288 ms
+Execution time (Go parallel): 1854 ms
+Execution time (Go parallel): 1586 ms
+Execution time (Go parallel): 1782 ms
+Execution time (Go parallel): 1676 ms
+Execution time (Go parallel): 1418 ms
+Execution time (Go parallel): 1120 ms
+Execution time (Go parallel): 797 ms
+Execution time (Go parallel): 824 ms
+Execution time (Go parallel): 1316 ms
+Execution time (Go parallel): 1178 ms
+Execution time (Go parallel): 1202 ms
+Execution time (Go parallel): 1123 ms
+Execution time (Go parallel): 812 ms
+Execution time (Go parallel): 820 ms
+Execution time (Go parallel): 1071 ms
+Execution time (Go parallel): 955 ms
+Execution time (Go parallel): 780 ms
+Execution time (Go parallel): 747 ms
+Execution time (Go parallel): 877 ms
+Execution time (Go parallel): 684 ms
+Execution time (Go parallel): 872 ms
+Execution time (Go parallel): 749 ms
+Execution time (Go parallel): 828 ms
