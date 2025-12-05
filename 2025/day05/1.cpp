@@ -2,33 +2,37 @@
 
 #include <iostream>
 #include <sstream>
-#include <vector>
-#include <queue>
+#include <set>
 
 using namespace std;
 
-int t = 100;
-
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
+#define int long long
+vector<pair<int, int>> vc;
 
 signed main() {
-	int a=50, ans=0;
 	string s;
-	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		if (c=='L') a-=x;
-		else a+=x;
-		a+=100;
-		a%=100;
-		if (a==0) ans++;
+
+	while (getline(cin,s)) {
+		s = aoc::str::trim(s);
+		if (s.empty()) break;
+		
+		int l, r;
+		char c;
+		stringstream(s) >> l >> c >> r;
+		if (l>r) swap(l, r);
+		vc.push_back({l, r});
+	}
+
+	int ans = 0, x;
+	while (cin >> x) {
+		bool ok = false;
+		for (auto& p : vc) {
+			if (p.first <= x && x <= p.second) {
+				ok = true;
+				break;
+			}
+		}
+		if (ok) ans++;
 	}
 
 	cout << ans;

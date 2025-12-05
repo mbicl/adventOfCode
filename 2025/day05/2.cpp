@@ -2,43 +2,41 @@
 
 #include <iostream>
 #include <sstream>
-#include <vector>
-#include <queue>
+#include <set>
 
 using namespace std;
 
-int t = 100;
-
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
+#define int long long
+vector<pair<int, int>> vc;
 
 signed main() {
-	int a=50, ans=0, cnt = 0;
 	string s;
-	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		int old_a = a;
-		if (c=='L') {
-			while (x--) {
-				a--;
-				if (a==0) ans++;
-				if (a==-1) a=99;
-			}
+
+	while (getline(cin,s)) {
+		s = aoc::str::trim(s);
+		if (s.empty()) break;
+		
+		int l, r;
+		char c;
+		stringstream(s) >> l >> c >> r;
+		if (l>r) swap(l, r);
+		vc.push_back({l, r});
+	}
+
+	int ans = 0, x;
+
+	sort(vc.begin(), vc.end());
+	vector<pair<int, int>> v;
+	for (auto& p : vc) {
+		if (v.empty() || v.back().second < p.first) {
+			v.push_back(p);
+		} else {
+			v.back().second = max(v.back().second, p.second);
 		}
-		else {
-			while (x--) {
-				a++;
-				if (a==100) a=0;
-				if (a==0) ans++;
-			}
-		}
+	}
+
+	for (auto p:v) {
+		ans += p.second - p.first + 1;
 	}
 
 	cout << ans;
