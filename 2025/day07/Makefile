@@ -9,7 +9,7 @@ one:
 
 two:
 	/usr/bin/g++ 2.cpp -o exe -O2 -std=c++20
-	./exe < input.txt > output.txt
+	./exe < input.txt > output2.txt
 
 get:
 	aocdl -year 2025 -day 7 -force -session-cookie $(AOC_SESSION)

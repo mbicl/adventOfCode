@@ -4,42 +4,56 @@
 #include <sstream>
 #include <vector>
 #include <queue>
-
+#define int long long
 using namespace std;
 
-int t = 100;
-
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
-
 signed main() {
-	int a=50, ans=0, cnt = 0;
+	vector<string> v;
 	string s;
-	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		int old_a = a;
-		if (c=='L') {
-			while (x--) {
-				a--;
-				if (a==0) ans++;
-				if (a==-1) a=99;
-			}
-		}
-		else {
-			while (x--) {
-				a++;
-				if (a==100) a=0;
-				if (a==0) ans++;
+	while (getline(cin, s)) {
+		v.push_back(s);
+	}
+
+	int n = v.size(), m = v[0].size();
+	int x = 0, y = 0;
+	for (int i=0; i<n; i++) {
+		for (int j=0; j<m; j++) {
+			if (v[i][j]=='S') {
+				x = i;
+				y = j;
 			}
 		}
 	}
+	vector<vector<int>> dp(n, vector<int>(m, 0));
 
+	v[x][y]='|';
+	dp[x][y] = 1;
+	int ans = 0;
+	for (int i=x; i<n-1; ++i) {
+		for (int j=0; j<m; ++j) {
+			if (v[i][j]=='|') {
+				if (v[i+1][j]!='^') {
+					v[i+1][j]='|';
+					dp[i+1][j] += dp[i][j];
+				}
+				else if (v[i+1][j]=='^') {
+					if (j-1>=0){
+						v[i+1][j-1]='|';
+						dp[i+1][j-1] += dp[i][j];
+					}
+					if (j+1<m) {
+						v[i+1][j+1]='|';
+						dp[i+1][j+1] += dp[i][j];
+					}
+				}
+			}
+		}
+	}
+	
+	for (int j=0; j<m; ++j) {
+		if (v[n-1][j]=='|') {
+			ans += dp[n-1][j];
+		}
+	}
 	cout << ans;
 }

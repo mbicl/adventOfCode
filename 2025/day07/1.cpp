@@ -4,32 +4,42 @@
 #include <sstream>
 #include <vector>
 #include <queue>
-
+#define int long long
 using namespace std;
 
-int t = 100;
-
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
-
 signed main() {
-	int a=50, ans=0;
+	vector<string> v;
 	string s;
-	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		if (c=='L') a-=x;
-		else a+=x;
-		a+=100;
-		a%=100;
-		if (a==0) ans++;
+	while (getline(cin, s)) {
+		v.push_back(s);
 	}
 
+	int n = v.size(), m = v[0].size();
+	int x = 0, y = 0;
+	for (int i=0; i<n; i++) {
+		for (int j=0; j<m; j++) {
+			if (v[i][j]=='S') {
+				x = i;
+				y = j;
+			}
+		}
+	}
+
+	v[x][y]='|';
+	int ans = 0;
+	for (int i=x+1; i<n; ++i) {
+		for (int j=0; j<m; ++j) {
+			if (v[i-1][j]=='|') {
+				if (v[i][j]=='.') {
+					v[i][j]='|';
+				}
+				else if (v[i][j]=='^') {
+					v[i][j-1]='|';
+					v[i][j+1]='|';
+					ans++;
+				}
+			}
+		}
+	}
 	cout << ans;
 }

@@ -7,6 +7,8 @@
 
 using namespace std;
 
+#define int long long
+
 int t = 100;
 
 struct point {
@@ -17,29 +19,73 @@ int dx[]={-1,0,0,1};
 int dy[]={0,-1,1,0};
 
 signed main() {
-	int a=50, ans=0, cnt = 0;
-	string s;
-	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		int old_a = a;
-		if (c=='L') {
-			while (x--) {
-				a--;
-				if (a==0) ans++;
-				if (a==-1) a=99;
-			}
-		}
-		else {
-			while (x--) {
-				a++;
-				if (a==100) a=0;
-				if (a==0) ans++;
-			}
-		}
-	}
+    vector<string> g;
+    vector<string> ops;
+    string line;
 
-	cout << ans;
+    while (getline(cin, line)) {
+        if (line.front() == '*' || line.front() == '+') {
+            ops = aoc::str::split(line, ' ');
+        } else {
+            g.push_back(line);
+        }
+    }
+
+    int cnt = 0, ans = 0;
+    vector<int> col;
+
+    int n=g.size();
+    int m=g[0].size();
+
+    for (int j=0; j<m; ++j){
+        string cur;
+        for (int i=0; i<n; ++i){
+            if (isdigit(g[i][j])){
+                cur+=g[i][j];
+            }
+        }
+        if (cur.size()){
+            col.push_back(stoll(cur));
+        } else {
+            // for (auto &x : col){
+            //     cout << x << " ";
+            // }
+            // cout << "\n";
+            if (ops[cnt]=="*"){
+                int res = 1;
+                for (auto &x : col){
+                    res*=x;
+                }
+                ans += res;
+            } else {
+                int res = 0;
+                for (auto &x : col){
+                    res+=x;
+                }
+                ans += res;
+            }
+            cnt++;
+            col.clear();
+        }
+    }
+    // for (auto &x : col){
+    //     cout << x << " ";
+    // }
+    // cout << "\n";
+    if (ops[cnt]=="*"){
+        int res = 1;
+        for (auto &x : col){
+            res*=x;
+        }
+        ans += res;
+    } else {
+        int res = 0;
+        for (auto &x : col){
+            res+=x;
+        }
+        ans += res;
+    }
+    col.clear();
+
+    cout << ans << "\n";
 }
