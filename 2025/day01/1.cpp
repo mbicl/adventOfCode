@@ -7,15 +7,6 @@
 
 using namespace std;
 
-int t = 100;
-
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
-
 signed main() {
 	int a=50, ans=0;
 	string s;
