@@ -4,4 +4,6 @@
 .vscode
 !Makefile
 .env
+.venv/
+venv/
 .DS_Store
