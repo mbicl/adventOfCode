@@ -3,43 +3,58 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <queue>
+#include <array>
+#include <map>
+
+#define int long long
 
 using namespace std;
 
-int t = 100;
+map<string, int> mp;
+vector<int> g[1000];
+int dp[1000][4];
+int svr, out, dac, fft;
 
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
+int go(int u, int b) {
+	b|=(u==dac?2:0);
+	b|=(u==fft?1:0);
+	if (dp[u][b]!=-1) {
+		return dp[u][b];
+	}
+	if (u==out) {
+		return (b==3?1:0);
+	}
+	int sum = 0;
+	for (auto v:g[u]) {
+		sum+=go(v, b);
+	}
+	dp[u][b]=sum;
+	return dp[u][b];
+}
 
 signed main() {
-	int a=50, ans=0, cnt = 0;
-	string s;
-	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		int old_a = a;
-		if (c=='L') {
-			while (x--) {
-				a--;
-				if (a==0) ans++;
-				if (a==-1) a=99;
-			}
-		}
-		else {
-			while (x--) {
-				a++;
-				if (a==100) a=0;
-				if (a==0) ans++;
-			}
+	for (int i=0; i<1000; ++i) {
+		for (int j=0; j<4; ++j) {
+			dp[i][j]=-1;
 		}
 	}
+	string s;
+	while (getline(cin, s)) {
+		auto v=aoc::str::split(s, ' ');
+		v[0].pop_back();
+		for (auto &i:v){
+			if (!mp.count(i)) {
+				mp[i]=mp.size();
+			}
+		}
+		for (int i=1; i<v.size(); ++i) {
+			g[mp[v[0]]].push_back(mp[v[i]]);
+		}
+	}
+	svr=mp["svr"];
+	out=mp["out"];
+	dac=mp["dac"];
+	fft=mp["fft"];
 
-	cout << ans;
+	cout << go(svr, 0) << endl;
 }
