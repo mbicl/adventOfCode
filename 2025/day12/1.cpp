@@ -5,31 +5,41 @@
 #include <vector>
 #include <queue>
 
+#define all(x) (x).begin(),(x).end()
+
 using namespace std;
 
-int t = 100;
-
-struct point {
-    int x, y;
-};
-
-int dx[]={-1,0,0,1};
-int dy[]={0,-1,1,0};
-
 signed main() {
-	int a=50, ans=0;
-	string s;
-	while (cin >> s) {
-		char c=s[0];
-		int x;
-		s.erase(0,1);
-		stringstream(s) >> x;
-		if (c=='L') a-=x;
-		else a+=x;
-		a+=100;
-		a%=100;
-		if (a==0) ans++;
+	vector<vector<string>> shapes(6, vector<string>(3));
+	vector<int> cnt(6,0);
+	for (int i=0; i<6; ++i){
+		string s;
+		cin >> s;
+		for (int j=0; j<3; ++j){
+			cin >> s;
+			cnt[i] += count(all(s), '#');
+			shapes[i][j] = s;
+		}
 	}
 
-	cout << ans;
+	int ans=0;
+	string s;
+	while (getline(cin,s)) {
+		s=aoc::str::trim(s);
+		if (s.empty()) continue;
+		int x, y;
+		char c;
+		stringstream ss(s);
+		ss >> x >> c >> y >> c;
+		vector<int> v(6);
+		for (int i=0; i<6; ++i){
+			ss >> v[i];
+		}
+		int a=0;
+		for (int i=0; i<6; ++i){
+			a+=v[i]*cnt[i];
+		}
+		if (a<x*y) ans++;
+	}
+	cout << ans << endl;
 }
